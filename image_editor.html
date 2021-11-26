@@ -3,79 +3,107 @@
     <head>
         <title>웹 포토샵</title>
         <style>
-            * {
-                padding: 0;
-                margin: 0;
-                font-family: sans-serif;
-            }
-
             body {
-                background: #2e2b2b;
-            }
-
-            .img-container {
-                position: absolute;
-                width: 50%;
-                height: 50%;
-                top: 40%;
-                left: 50%;
-                transform: translate(-50%, -50%);
+                display: block;
+                margin-left: auto;
+                margin-right: auto;
                 text-align: center;
+                align-items: center;
+                gap: 10px;
+                height: 80vh;
             }
 
-            .image {
-                max-width: 100%;
-                max-height: 100%;
-            }
+            #display_image {
+                width: 500px;
+                height: 500px;
+                border: 1px sokid black;
+                background-position: center;
+                background-size: cover;
+                margin-top: 50px;
 
-            .file-upload-section {
-                margin: 5% auto auto;
-                font-weight: bold;
-                width: 50%;
-                padding: 4px;
-                color: white;
-                text-align: center;
-                background: green;
-                cursor: pointer;
             }
-
-            #foto-file {
-                display: none;
+            button {
+                padding: 10px 20px;
+                border: 1px solid;
+                border-color: blue;
+                background-color: white;
             }
         </style>
     </head>
     <body>
-        <div class="file-upload-section" onclick="selectImage()">
-            <input id="foto-file" type="file">
-            select Image
-        </div>
-
-        <div class="img-container">
-            <img id="foto-image" class="image"/>
-        </div>
         <div>
             <div>
-                <button>회색으로</button>
+                <img id="display_image" src=""/>
             </div>
+            <br/>
+            <input type="file" id="image">
+        </div>
+        <br/>
+        <div>
             <div>
-                <button>흐리게</button>
+                <button id="gray">회색으로</button>
+                <button id="blurred">흐리게</button>
+                <button id="shadow">그림자</button>
+                <button id='opacity'>50%투명</button>
             </div>
+            <br/>
             <div>
-                <button>그림자</button>
-            </div>
-            <div>
-                <button>50%투명</button>
-            </div>
-            <div>
-                <button>좌로 90도 회전</button>
-            </div>
-            <div>
-                <button>우로 90도 회전</button>
-            </div>
-            <div>
-                <button>이미지 초기화</button>
+                <button id="ratate_left">좌로 90도 회전</button>
+                <button id="ratate_right">우로 90도 회전</button>
+                <button id="init">이미지 초기화</button>
             </div>
         </div>
 
     </body>
+    <script>
+
+        const image_name = document.getElementById("display_image");
+
+        document
+            .getElementById('image')
+            .addEventListener('click', function () {
+                var image_input = prompt('이미지 선택');
+                var extension = image_input
+                    .substring(image_input.lastIndexOf('.') + 1)
+                    .toLowerCase();
+
+                console.log(image_input);
+                if (extension == "jpeg" || extension == "jpg") {
+                    image_name.src = image_input;
+                } else {
+                    alert("이미지 파일이 아닙니다. 다시 입력하세요");
+                }
+            })
+
+        document.getElementById("gray").addEventListener("click", function() {
+            image_name.style.filter = "grayscale(80%)";
+        })
+
+        document.getElementById("blurred").addEventListener("click", function() {
+            image_name.style.filter = "blur(4px)";
+        })
+
+        document.getElementById("shadow").addEventListener("click", function() {
+            image_name.style.filter = "drop-shadow(16px 16px 20px red) invert(75%)";
+        })
+
+        document.getElementById("opacity").addEventListener("click", function() {
+            image_name.style.filter = "opacity(25%)";
+        })
+
+        document.getElementById("ratate_left").addEventListener("click", function() {
+            image_name.style.transform = "rotate(270deg)";
+        })
+
+        document.getElementById("ratate_right").addEventListener("click", function() {
+            image_name.style.transform = "rotate(90deg)";
+        })
+
+        document.getElementById("init").addEventListener("click", function() {
+            image_name.style.filter = "none";
+            image_name.style.transform = "initial";
+        })
+
+        
+    </script>
 </html>
